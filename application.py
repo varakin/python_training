@@ -1,6 +1,7 @@
 from selenium.webdriver.firefox.webdriver import WebDriver
 __author__ = 'varakin'
 
+
 class Application:
 
     def __init__(self):
