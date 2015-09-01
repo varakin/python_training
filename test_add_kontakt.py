@@ -9,6 +9,7 @@ def is_alert_present(wd):
     except:
         return False
 
+
 class test_add_kontakt(unittest.TestCase):
     def setUp(self):
         self.wd = WebDriver()
@@ -16,22 +17,14 @@ class test_add_kontakt(unittest.TestCase):
     
     def test_add_kontakt(self):
         wd = self.wd
-        self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
-        self.open_add_kontakt(wd)
         self.fill_new_kontakt(wd, Kontakt(first="qwer", middle="asdf", last="zxcv", phone="1234"))
-        self.save_new_kontakt(wd)
-        self.return_home_page(wd)
         self.logout(wd)
 
     def test_add_empty_kontakt(self):
         wd = self.wd
-        self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
-        self.open_add_kontakt(wd)
         self.fill_new_kontakt(wd, Kontakt(first="", middle="", last="", phone=""))
-        self.save_new_kontakt(wd)
-        self.return_home_page(wd)
         self.logout(wd)
 
     def logout(self, wd):
@@ -44,6 +37,7 @@ class test_add_kontakt(unittest.TestCase):
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
 
     def fill_new_kontakt(self, wd, kontakt):
+        self.open_add_kontakt(wd)
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
         wd.find_element_by_name("firstname").send_keys(kontakt.first)
@@ -56,11 +50,15 @@ class test_add_kontakt(unittest.TestCase):
         wd.find_element_by_name("home").click()
         wd.find_element_by_name("home").clear()
         wd.find_element_by_name("home").send_keys(kontakt.phone)
+        self.save_new_kontakt(wd)
+        self.return_home_page(wd)
+
 
     def open_add_kontakt(self, wd):
         wd.find_element_by_link_text("add new").click()
 
     def login(self, wd, username, password):
+        self.open_home_page(wd)
         wd.find_element_by_name("user").click()
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys(username)

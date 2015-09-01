@@ -7,3 +7,5 @@ class Kontakt:
         self.middle = middle
         self.last = last
         self.phone = phone
+
+
